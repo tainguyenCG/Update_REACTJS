@@ -1,23 +1,20 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 
+const MyComponent = () => {
+  return <h1>Bài học mới của tôi</h1>;
+};// gọi nó ra tại vị trí khác = cách  <MyComponent></MyComponent> hoặc <MyComponent/>
+
 // function App() {
-const App = () => { //arrow functiont
+const App = () => {
+  //arrow functiont cú pháp là const Ten () => {} lưu ý tên phải viết hoa chữ cái đầu
   const [count, setCount] = useState(0);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
+      
       <h1>hello word </h1>
+      <MyComponent></MyComponent>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
         <p>
