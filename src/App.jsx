@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import "./App.css";
 import MyComponent from "./components/learn/MyComponent";
 import {SecondComponent, ThirdComponent} from "./components/learn/SecondComponent";
@@ -8,7 +8,7 @@ import {SecondComponent, ThirdComponent} from "./components/learn/SecondComponen
 // function App() {
 const App = () => {
   //arrow functiont cú pháp là const Ten () => {} lưu ý tên phải viết hoa chữ cái đầu
-  const [count, setCount] = useState(0);
+
 
   return (
     <>
