@@ -1,9 +1,9 @@
 import { useState } from "react";
 import "./App.css";
+import MyComponent from "./components/learn/MyComponent";
+import {SecondComponent, ThirdComponent} from "./components/learn/SecondComponent";
 
-const MyComponent = () => {
-  return <h1>Bài học mới của tôi</h1>;
-};// gọi nó ra tại vị trí khác = cách  <MyComponent></MyComponent> hoặc <MyComponent/>
+
 
 // function App() {
 const App = () => {
@@ -14,14 +14,14 @@ const App = () => {
     <>
       
       <h1>hello word </h1>
-      <MyComponent></MyComponent>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
+
+
+      <MyComponent/>
+      <SecondComponent></SecondComponent>
+      <ThirdComponent></ThirdComponent>
+
+
+      
     </>
   );
 };
