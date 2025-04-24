@@ -2,13 +2,24 @@ import "./components/todo/todo.css";
 import TodoData from "./components/todo/todo_data";
 import TodoNew from "./components/todo/todo_new";
 
+const name = "thanhtai";
+const age = 25;
+const data = {
+  address: "Tanan",
+  country: "vietnam",
+}
+
 const App = () => {
   return (
     <>
       <div className="todo_container">
         <div className="todo_title">Todo List</div>
         <TodoNew />
-        <TodoData />
+        <TodoData  
+        name={name}
+        age = {age}
+        data = {data}
+        />
         <div className="todo_img">
           <img
             className="rounded-2xl max-h-[1800px]"
