@@ -76,4 +76,17 @@ body {
     color: #1e3a8a;
     border: 1px solid #c7d2fe;
   }
-  
+  .todo_item{
+    display: flex;
+    justify-content: space-between;
+  }
+  .todo_item button {
+    padding: 10px 16px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}

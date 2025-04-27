@@ -1,26 +1,39 @@
+import { useState } from "react";
 
 const TodoNew = (props) => {
-  const {addNewTodo} = props;
+  const { addNewTodo } = props;
 
   // addNewTodo("thanhtai");
-  const handleClick = () =>{
-    alert("Bạn đã thêm thành công")
-  }
 
-  const handleOnChange = () =>{
-    console.log("handleOnChange", event.target.value)
-  }
+  const [valueInput, setValueInput] = useState("");
+  const handleClick = () => {
+    addNewTodo(valueInput);
+    // console.log("check:", valueInput);
+    setValueInput("")
+  };
+
+  const handleOnChange = (name) => {
+    setValueInput(name);
+  };
   return (
     <>
       <div className="todo_new">
-        <input type="text"
-        onChange={(event) => {handleOnChange(event.target.value)}} /> 
+        <input
+          type="text"
+          value={valueInput}
+          onChange={(event) => {
+            handleOnChange(event.target.value);
+          }}
+        />
         {/* onChange gõ giá trị vào input */}
         <button
-        style={{cursor: "pointer"}}
-        onClick={handleClick} //onClick sử dụng chuột để click
-        >Add</button>
+          style={{ cursor: "pointer" }}
+          onClick={handleClick} //onClick sử dụng chuột để click
+        >
+          Add
+        </button>
       </div>
+      {/* <div>My text input is {valueInput}</div> */}
     </>
   );
 };
