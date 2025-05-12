@@ -27,14 +27,20 @@ const App = () => {
       <div className="todo_container">
         <div className="todo_title">Todo List</div>
         <TodoNew addNewTodo={addNewTodo} />
-        <TodoData todoList={todoList} />
-        <div className="todo_img">
-          <img
-            className="rounded-2xl max-h-[1800px]"
-            src="https://cdni.iconscout.com/illustration/premium/thumb/user-login-illustration-download-in-svg-png-gif-file-formats--password-profile-businessman-pack-business-illustrations-5857593.png?f=webp"
-            alt="login form"
-          />
-        </div>
+
+        {todoList.length > 0 ? (
+          //nếu todolist có data thì trả về data vừa add, ngược lại nó sẽ có hình ảnh(toán từ 3 ngôi ? : )
+          <TodoData todoList={todoList} />
+        ) : (
+          <div className="todo_img">
+            <img
+              className="rounded-2xl max-h-[1800px]"
+              src="https://cdni.iconscout.com/illustration/premium/thumb/user-login-illustration-download-in-svg-png-gif-file-formats--password-profile-businessman-pack-business-illustrations-5857593.png?f=webp"
+              alt="login form"
+            />
+          </div>
+        )}
+       
       </div>
     </>
   );
