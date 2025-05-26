@@ -12,6 +12,7 @@ const Footer = () => {
         <li>Jobs</li>
         <li>Term of Use</li>
         <li>Privacy</li>
+        <li>Privacy</li>
         <li>Legal Notices</li>
         <li>Cookie Preferences</li>
         <li>Corporate Infomation</li>
