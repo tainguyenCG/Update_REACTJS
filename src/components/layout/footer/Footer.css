@@ -1,0 +1,44 @@
+.footer {
+  background-color: #111;
+  color: #ccc;
+  padding: 40px 20px;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.footer ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.footer ul li {
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.footer ul li:hover {
+  color: #8AC732;
+  text-decoration: underline;
+}
+
+.footer .copyright-text {
+  font-size: 13px;
+  color: #999;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .footer ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

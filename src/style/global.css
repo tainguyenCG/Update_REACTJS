@@ -3,3 +3,15 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+/* Wrapper chiếm toàn bộ chiều cao màn hình */
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Main content sẽ chiếm phần còn lại giữa navbar và footer */
+.content {
+  flex: 1;
+}

@@ -1,6 +1,11 @@
-const UserPage = () =>{
-    return(
-        <><div>Đây là UserPage</div></>
-    )
-}
+
+const UserPage = () => {
+  return (
+    <>
+      <div style={{ paddingTop: "80px" }}>
+      <div> đay là UserPage</div>
+    </div>
+    </>
+  );
+};
 export default UserPage;
