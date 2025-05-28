@@ -6,7 +6,7 @@ import NotFound from "./pages/NotFound/NotFound";
 import LoginPage from "./pages/login/login";
 import RegisterPage from "./pages/register/register";
 import UserPage from "./pages/user/user";
-import ProductPage from "./pages/product/product";
+import BookPage from "./pages/book/book";
 import "./style/global.css";
 import App from "./App";
 import TodoApp from "./components/todo/TodoApp";
@@ -25,8 +25,8 @@ const router = createBrowserRouter([
         element: <UserPage />,
       },
       {
-        path: "/products",
-        element: <ProductPage />,
+        path: "/books",
+        element: <BookPage />,
       },
     ],
   },

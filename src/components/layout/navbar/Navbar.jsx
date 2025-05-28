@@ -1,35 +1,39 @@
 import { useEffect, useRef, useState } from "react";
 import "./Navbar.css";
 import logo from "../../../assets/logo.png";
-import bell_icon from "../../../assets/bell_icon.svg";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaSignOutAlt } from "react-icons/fa";
-import { Popover } from "antd";
 import { Button, Modal } from "antd";
-import Search from "antd/es/input/Search";
+
 const Navbar = () => {
   const navRef = useRef();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const showModal = () => {
     setIsModalOpen(true);
   };
+
   const handleOk = () => {
     navigate("/login");
   };
+
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  const bell_content = (
-    <div>
-      <p>Bạn chưa có thông báo nào</p>
-    </div>
-  );
+
+  const handleMenuClick = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
       if (navRef.current) {
-        // Đảm bảo navRef.current không phải là null
         if (window.scrollY >= 80) {
           navRef.current.classList.add("nav-dark");
         } else {
@@ -39,10 +43,7 @@ const Navbar = () => {
     };
 
     window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -52,11 +53,14 @@ const Navbar = () => {
           <img src={logo} alt="logo" />
         </Link>
 
-        <ul className="nav-links">
+        <ul className={`nav-links ${isMenuOpen ? "show-menu" : ""}`}>
           <li>
             <NavLink
               to="/"
-              className={({ isActive }) => (isActive ? "custom_link active" : "custom_link")}
+              className={({ isActive }) =>
+                isActive ? "custom_link active" : "custom_link"
+              }
+              onClick={closeMenu}
             >
               Home
             </NavLink>
@@ -64,35 +68,47 @@ const Navbar = () => {
           <li>
             <NavLink
               to="/users"
-              className={({ isActive }) => (isActive ? "custom_link active" : "custom_link")}
+              className={({ isActive }) =>
+                isActive ? "custom_link active" : "custom_link"
+              }
+              onClick={closeMenu}
             >
               Users
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/products"
-              className={({ isActive }) => (isActive ? "custom_link active" : "custom_link")}
+              to="/books"
+              className={({ isActive }) =>
+                isActive ? "custom_link active" : "custom_link"
+              }
+              onClick={closeMenu}
             >
-              Products
+              Books
             </NavLink>
           </li>
         </ul>
       </div>
+
       <div className="navbar-right">
-        <Search placeholder="Movie search" enterButton />
-        <p>Intern</p>
-        <Popover content={bell_content} title="">
-          <img src={bell_icon} alt="" className="icon" />
-        </Popover>
-        <div className="navbar-profile">
-          <Button type="primary" onClick={showModal}>
-            <FaSignOutAlt className="SignOut-icon" />
-          </Button>
-          <Modal title="" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-            <p>Confirm logout?</p>
-          </Modal>
+        <Button type="primary" onClick={showModal}>
+          <FaSignOutAlt className="SignOut-icon" />
+        </Button>
+
+        <div className="hamburger-menu" onClick={handleMenuClick}>
+          <div className="bar"></div>
+          <div className="bar"></div>
+          <div className="bar"></div>
         </div>
+
+        <Modal
+          title=""
+          open={isModalOpen}
+          onOk={handleOk}
+          onCancel={handleCancel}
+        >
+          <p>Confirm logout?</p>
+        </Modal>
       </div>
     </div>
   );

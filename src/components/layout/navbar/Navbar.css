@@ -1,28 +1,40 @@
+/* Navbar tổng thể */
 .navbar {
   width: 100%;
   display: flex;
-  padding: 15px 6%;
+  padding: 16px 3%;
   justify-content: space-between;
+  align-items: center;
   position: fixed;
+  top: 0;
   font-size: 16px;
   font-weight: 500;
   color: #e5e5e5;
   background-color: #141414;
-  z-index: 2;
+  z-index: 1000;
 }
 
+/* Link custom */
 .custom_link {
   color: white;
   text-decoration: none;
+  transition: color 0.3s;
 }
 .custom_link:hover {
-  color: red; /* Màu đỏ khi hover */
+  color: red;
+}
+.custom_link.active {
+  color: red;
+  font-weight: bold;
+  border-bottom: 2px solid red;
 }
 
+/* Khi scroll */
 .nav-dark {
   background: #141414;
 }
 
+/* Bên trái navbar */
 .navbar-left {
   display: flex;
   align-items: center;
@@ -30,7 +42,10 @@
 }
 
 .navbar-left img {
-  width: 150px;
+  max-width: 100%; /* không vượt quá kích thước container */
+  height: auto; /* giữ tỉ lệ ảnh */
+  max-height: 40px; /* giới hạn chiều cao tối đa (có thể chỉnh theo ý bạn) */
+  min-height: 20px; /* chiều cao tối thiểu để ảnh không quá nhỏ */
 }
 
 .navbar-left ul {
@@ -41,26 +56,58 @@
 
 .navbar-left ul li {
   cursor: pointer;
-  text-decoration: none;
 }
 
+/* Bên phải navbar */
 .navbar-right {
   display: flex;
-  gap: 20px;
   align-items: center;
+  gap: 10px;
 }
 
-.navbar-right .icons {
-  width: 14px;
+/* Logout button icon */
+.SignOut-icon {
+  font-size: 18px;
+}
+
+/* Hamburger menu */
+.hamburger-menu {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 22px;
+  height: 18px;
   cursor: pointer;
-  transition: transform 0.3s ease-in-out;
+  margin-left: 10px;
 }
 
-.navbar-right .profile {
-  border-radius: 4px;
-  width: 35px;
+.hamburger-menu .bar {
+  height: 3px;
+  width: 100%;
+  background-color: white;
+  border-radius: 2px;
 }
 
+/* Hiện menu khi bấm hamburger */
+.nav-links {
+  transition: all 0.3s ease-in-out;
+}
+.show-menu {
+  display: flex !important;
+  flex-direction: column;
+  position: absolute;
+  top: 70px;      /* cách navbar một chút */
+  right: 0;       /* hiện menu sát bên phải */
+  width: 180px;   /* rộng vừa đủ, có thể chỉnh */
+  background-color: #141414;
+  padding: 15px;
+  gap: 10px;
+  z-index: 999;
+  border-radius: 4px; /* tuỳ chỉnh cho đẹp */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+/* Dropdown */
 .navbar-profile {
   display: flex;
   align-items: center;
@@ -76,9 +123,8 @@
   width: max-content;
   background: #191919;
   padding: 18px 22px;
-  border-radius: 2px;
-  margin-top: 4px;
   border-radius: 4px;
+  margin-top: 4px;
   text-decoration: underline;
   z-index: 1;
   display: none;
@@ -92,18 +138,11 @@
 .navbar-profile:hover .dropdown {
   display: block;
 }
-
 .navbar-profile:hover .icons {
-  /* transition: 0.2s; */
-  /* margin-top: 8px; */
   transform: rotate(90deg);
 }
-.custom_link.active {
-  color: red;
-  font-weight: bold;
-  border-bottom: 2px solid red;
-}
 
+/* Responsive */
 @media (max-width: 1130px) {
   .navbar {
     padding: 20px 4%;
@@ -113,14 +152,18 @@
     display: none;
   }
 
+  .hamburger-menu {
+    display: flex;
+  }
+
   .navbar img {
-    height: 25px;
+    max-height: 45px; /* nhỏ hơn trên desktop, vẫn dễ nhận dạng */
   }
 }
 
 @media (max-width: 500px) {
   .navbar img {
-    height: 20px;
+    max-height: 45px; /* nhỏ hơn nữa cho điện thoại nhỏ */
   }
 
   .navbar-right {
