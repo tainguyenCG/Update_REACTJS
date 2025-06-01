@@ -1,6 +1,24 @@
-import { Input, Button } from "antd";
+import { Input, Button, notification } from "antd";
+import { useState } from "react";
+import { createUserAPI } from "../../services/api.service";
 
 const UserForm = () => {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassWord] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const handleClickBtn = async () => {
+    const res = await createUserAPI(fullName, email, password, phone);
+    if (res.data && res.data.data){
+      notification.success({
+        message:'Create User',
+        description:"Tạo User thành công"
+      })
+    }
+    console.log("check res", res.data.data);
+  };
+
   const labelStyle = {
     display: "block",
     fontWeight: "bold",
@@ -24,22 +42,53 @@ const UserForm = () => {
     <div style={formStyle}>
       <div style={inputContainerStyle}>
         <span style={labelStyle}>Full Name</span>
-        <Input />
+        <Input
+          placeholder="Họ và tên"
+          value={fullName}
+          onChange={(event) => {
+            setFullName(event.target.value);
+          }}
+        />
       </div>
+
       <div style={inputContainerStyle}>
         <span style={labelStyle}>Email</span>
-        <Input />
+        <Input
+          placeholder="Email"
+          value={email}
+          onChange={(event) => {
+            setEmail(event.target.value);
+          }}
+        />
       </div>
+
       <div style={inputContainerStyle}>
         <span style={labelStyle}>PassWord</span>
-        <Input.Password />
+        <Input.Password
+          placeholder="Mật khẩu"
+          value={password}
+          onChange={(event) => {
+            setPassWord(event.target.value);
+          }}
+        />
       </div>
+
       <div style={inputContainerStyle}>
         <span style={labelStyle}>Phone</span>
-        <Input />
+        <Input
+          placeholder="Số điện thoại"
+          value={phone}
+          onChange={(event) => {
+            const onlyNumbers = event.target.value.replace(/\D/g, ""); // loại bỏ mọi ký tự không phải số
+            setPhone(onlyNumbers);
+          }}
+        />
       </div>
+
       <div style={{ textAlign: "right" }}>
-        <Button type="primary">Create User</Button>
+        <Button onClick={handleClickBtn} type="primary">
+          Create User
+        </Button>
       </div>
     </div>
   );
