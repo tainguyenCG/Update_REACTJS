@@ -10,13 +10,17 @@ const UserForm = () => {
 
   const handleClickBtn = async () => {
     const res = await createUserAPI(fullName, email, password, phone);
-    if (res.data && res.data.data){
+    if (res.data) {
       notification.success({
-        message:'Create User',
-        description:"Tạo User thành công"
-      })
+        message: "Create User",
+        description: "Tạo User thành công",
+      });
+    } else {
+      notification.error({
+        message: "Error User",
+        description: JSON.stringify(res.message),
+      });
     }
-    console.log("check res", res.data.data);
   };
 
   const labelStyle = {

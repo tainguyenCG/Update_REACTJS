@@ -1,78 +1,54 @@
-import { Space, Table, Tag } from "antd";
+import { Table } from "antd";
+import { fetchAllUserAPI } from "../../services/api.service";
+import { useEffect, useState } from "react";
 
 const UserTable = () => {
+  const [dataUser, setDataUser] = useState([
+    // {_id: "tui", fullName: 24, email: "LA"},
+    // {_id: "tui", fullName: 24, email: "LA"},
+  ]);
+
+  useEffect(() => {
+    loadUser();
+  }, []);
+
+  const loadUser = async () => {
+    console.log("bắt đầu");
+    const res = await fetchAllUserAPI();
+    setDataUser(res.data);
+    console.log("in ra", res);
+  };
+
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      render: (text) => <a>{text}</a>,
+      title: "ID",
+      dataIndex: "_id",
     },
     {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
-    },
-    {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
-    },
-    {
-      title: "Tags",
-      key: "tags",
-      dataIndex: "tags",
-      render: (_, { tags }) => (
-        <>
-          {tags.map((tag) => {
-            let color = tag.length > 5 ? "geekblue" : "green";
-            if (tag === "loser") {
-              color = "volcano";
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
+      title: "Avatar",
+      dataIndex: "avatar",
+      render: (avatar) => (
+        <img
+          src={`${import.meta.env.VITE_BE_URL}/images/avatar/${avatar}`}
+          alt="avatar"
+          style={{ width: 40, height: 40, borderRadius: "50%", objectFit: "cover" }}
+        />
       ),
     },
     {
-      title: "Action",
-      key: "action",
-      render: (_, record) => (
-        <Space size="middle">
-          <a>Invite {record.name}</a>
-          <a>Delete</a>
-        </Space>
-      ),
-    },
-  ];
-  const data = [
-    {
-      key: "1",
-      name: "John Brown",
-      age: 32,
-      address: "New York No. 1 Lake Park",
-      tags: ["nice", "developer"],
+      title: "Full Name",
+      dataIndex: "fullName",
     },
     {
-      key: "2",
-      name: "Jim Green",
-      age: 42,
-      address: "London No. 1 Lake Park",
-      tags: ["loser"],
+      title: "Email",
+      dataIndex: "email",
     },
     {
-      key: "3",
-      name: "Joe Black",
-      age: 32,
-      address: "Sydney No. 1 Lake Park",
-      tags: ["cool", "teacher"],
+      title: "Phone",
+      dataIndex: "phone",
     },
   ];
 
-  return <Table columns={columns} dataSource={data} />;
+  return <Table columns={columns} dataSource={dataUser} rowKey={"_id"} />;
 };
 export default UserTable;
