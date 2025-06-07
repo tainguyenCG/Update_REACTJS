@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Input, notification, Modal } from "antd";
-import {  updateUserAPI } from "../../services/api.service";
+import { updateUserAPI } from "../../services/api.service";
 
 const UpdateUserModal = (props) => {
   const [id, setId] = useState("");
@@ -25,7 +25,7 @@ const UpdateUserModal = (props) => {
         description: "Cập nhật User thành công",
       });
       resetAndCloseModal();
-        await loadUser();
+      await loadUser();
     } else {
       notification.error({
         message: "Error User",
@@ -39,7 +39,7 @@ const UpdateUserModal = (props) => {
     setFullName("");
     setId("");
     setPhone("");
-    setDataUpdate(null)
+    setDataUpdate(null);
   };
 
   //css
