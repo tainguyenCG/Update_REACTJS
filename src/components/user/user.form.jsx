@@ -78,7 +78,7 @@ const UserForm = (props) => {
         </Button>
       </div>
       <Modal
-        title=""
+        title="Create User"
         closable={{ "aria-label": "Custom Close Button" }}
         open={isModalOpen}
         onOk={() => {

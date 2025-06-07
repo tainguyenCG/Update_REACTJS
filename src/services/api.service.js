@@ -11,14 +11,24 @@ const createUserAPI = (fullName, email, password, phone) => {
   };
   // const data = { fullName, email, password, phone };// key : value giống thì viết như này
 
-  return axios.post(URL_BE, data);
+  return axios.post(URL_BE, data);//tạo mới
 };
 
-const updateUserAPI = () => {};
+
 
 const fetchAllUserAPI = () => {
-  const URL_BE = "/api/v1/user"; 
-  return axios.get(URL_BE);
+  const URL_BE = "/api/v1/user";
+  return axios.get(URL_BE);//lấy
+};
+
+const updateUserAPI = (fullName, _id, phone) => {
+  const URL_BE = "/api/v1/user";
+  const data = {
+    _id: _id,
+    fullName: fullName,
+    phone: phone,
+  };
+  return axios.put(URL_BE, data);//update
 };
 
 export { createUserAPI, updateUserAPI, fetchAllUserAPI };
