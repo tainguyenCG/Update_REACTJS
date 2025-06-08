@@ -1,38 +1,60 @@
-// import axios from "axios";
 import axios from "./axios.customize";
 
+// Tạo mới user
 const createUserAPI = (fullName, email, password, phone) => {
   const URL_BE = "/api/v1/user";
   const data = {
-    fullName: fullName, //nếu API BE viết full_Name thì cập nhật thành full_Name: fullName
-    email: email,
-    password: password,
-    phone: phone,
+    fullName,
+    email,
+    password,
+    phone,
   };
-  // const data = { fullName, email, password, phone };// key : value giống thì viết như này
-
-  return axios.post(URL_BE, data);//tạo mới
+  return axios.post(URL_BE, data);
 };
 
-
+// Lấy danh sách user
 const fetchAllUserAPI = () => {
   const URL_BE = "/api/v1/user";
-  return axios.get(URL_BE);//lấy
+  return axios.get(URL_BE);
 };
 
-const updateUserAPI = (fullName, _id, phone) => {
+// Cập nhật user (có avatar và email)
+const updateUserAPI = (fullName, _id, phone, avatar, email) => {
   const URL_BE = "/api/v1/user";
   const data = {
-    _id: _id,
-    fullName: fullName,
-    phone: phone,
+    _id,
+    fullName,
+    phone,
+    avatar,
+    email,
   };
-  return axios.put(URL_BE, data);//update
+  return axios.put(URL_BE, data);
 };
 
-const deleteUserAPI = ( _id) => {
+// Xoá user
+const deleteUserAPI = (_id) => {
   const URL_BE = `/api/v1/user/${_id}`;
-  return axios.delete(URL_BE);//update
+  return axios.delete(URL_BE);
 };
 
-export { createUserAPI, updateUserAPI, fetchAllUserAPI, deleteUserAPI };
+// Upload file (avatar)
+const handleUploadFile = (file, folder) => {
+  const URL_BE = `/api/v1/file/upload`;
+  const config = {
+    headers: {
+      "upload-type": folder,
+      "Content-Type": "multipart/form-data",
+    },
+  };
+  const bodyFormData = new FormData();
+  bodyFormData.append("fileImg", file);
+  return axios.post(URL_BE, bodyFormData, config);
+};
+
+export {
+  createUserAPI,
+  updateUserAPI,
+  fetchAllUserAPI,
+  deleteUserAPI,
+  handleUploadFile,
+};
