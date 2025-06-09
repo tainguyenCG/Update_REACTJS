@@ -1,65 +1,66 @@
-
-
 import { Button, Drawer, message } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { handleUploadFile, updateUserAPI } from "../../services/api.service";
 
 const ViewUserDetail = (props) => {
-  const { dataDetail, setDataDetail, isDetailOpen, setIsDetailOpen } = props;
+  const { dataDetail, setDataDetail, isDetailOpen, setIsDetailOpen, loadUser } = props;
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
+  const [imageVersion, setImageVersion] = useState(Date.now());
 
-  const handleFileOnChange = (event) => {
-    if (!event.target.files || event.target.files.length === 0) {
+  useEffect(() => {
+    if (isDetailOpen) {
+      setImageVersion(Date.now());
       setSelectedFile(null);
       setPreview(null);
-      return;
     }
+  }, [isDetailOpen]);
 
-    const file = event.target.files[0];
+  const handleFileOnChange = (event) => {
+    const file = event.target.files?.[0];
     if (file) {
       setSelectedFile(file);
       setPreview(URL.createObjectURL(file));
+    } else {
+      setSelectedFile(null);
+      setPreview(null);
     }
   };
 
   const handleUpdateUserAvatar = async () => {
+    if (!selectedFile || !dataDetail?._id) {
+      message.error("Vui lòng chọn ảnh trước khi lưu.");
+      return;
+    }
+
     try {
-      if (!selectedFile || !dataDetail?._id) {
-        message.error("Vui lòng chọn ảnh trước khi lưu.");
-        return;
-      }
-
-      // Bước 1: Upload ảnh lên server
       const resUpload = await handleUploadFile(selectedFile, "avatar");
-      if (resUpload?.data) {
-        const newAvatar = resUpload.data.fileUploaded;
+      const newAvatar = resUpload?.data?.fileUploaded;
 
-        // Bước 2: Gọi API cập nhật avatar cho user
-        const resUpdate = await updateUserAPI(
-          dataDetail.fullName,
-          dataDetail._id,
-          dataDetail.phone,
-          newAvatar,
-          dataDetail.email
-        );
+      if (!newAvatar) throw new Error("Upload file thất bại.");
 
-        if (resUpdate && resUpdate.data) {
-          message.success("Cập nhật avatar thành công!");
-          // Cập nhật lại dữ liệu hiển thị
-          setDataDetail({
-            ...dataDetail,
-            avatar: newAvatar,
-          });
-          setSelectedFile(null);
-          setPreview(null);
-        } else {
-          throw new Error("Update API không thành công.");
-        }
-      } else {
-        throw new Error("Upload file thất bại.");
-      }
+      const resUpdate = await updateUserAPI(
+        dataDetail.fullName,
+        dataDetail._id,
+        dataDetail.phone,
+        newAvatar,
+        dataDetail.email
+      );
+
+      if (!resUpdate?.data) throw new Error("Update API không thành công.");
+
+      message.success("Cập nhật avatar thành công!");
+      if (loadUser) loadUser();
+
+      setSelectedFile(null);
+      setPreview(null);
+      setImageVersion(Date.now());
+
+      setTimeout(() => {
+        setDataDetail(null);
+        setIsDetailOpen(false);
+      }, 300);
     } catch (error) {
       console.error(error);
       message.error("Đã xảy ra lỗi khi cập nhật avatar.");
@@ -80,8 +81,9 @@ const ViewUserDetail = (props) => {
           <p>ID: {dataDetail._id}</p>
           <div>
             <img
-            
-              src={`${import.meta.env.VITE_BE_URL}/images/avatar/${dataDetail.avatar}`}
+              src={`${import.meta.env.VITE_BE_URL}/images/avatar/${
+                dataDetail.avatar
+              }?v=${imageVersion}`}
               alt="avatar"
               style={{
                 width: 80,
@@ -110,21 +112,12 @@ const ViewUserDetail = (props) => {
                 cursor: "pointer",
                 transition: "background-color 0.3s",
               }}
-              onMouseOver={(e) =>
-                (e.target.style.backgroundColor = "#40a9ff")
-              }
-              onMouseOut={(e) =>
-                (e.target.style.backgroundColor = "#1890ff")
-              }
+              onMouseOver={(e) => (e.target.style.backgroundColor = "#40a9ff")}
+              onMouseOut={(e) => (e.target.style.backgroundColor = "#1890ff")}
             >
               Upload Avatar
             </label>
-            <input
-              type="file"
-              id="upload-avatar"
-              hidden
-              onChange={handleFileOnChange}
-            />
+            <input type="file" id="upload-avatar" hidden onChange={handleFileOnChange} />
           </div>
           {preview && (
             <>
