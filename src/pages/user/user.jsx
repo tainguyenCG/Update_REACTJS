@@ -5,22 +5,36 @@ import { useEffect, useState } from "react";
 
 const UserPage = () => {
   const [dataUser, setDataUser] = useState([]);
+  const [current, setCurrent] = useState(1);
+  const [pageSize, setPageSize] = useState(5); //lấy 5ng dùng
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     loadUser();
   }, []);
 
   const loadUser = async () => {
-    console.log("bắt đầu");
-    const res = await fetchAllUserAPI();
-    setDataUser(res.data);
-    console.log("in ra", res);
+    const res = await fetchAllUserAPI(current, pageSize);
+    if (res.data) {
+      setDataUser(res.data.result);
+      setCurrent(res.data.meta.current);
+      setPageSize(res.data.meta.pageSize);
+      setTotal(res.data.meta.total);
+    }
   };
   return (
     <>
       <div style={{ paddingTop: "90px" }}>
         <UserForm loadUser={loadUser} />
-        <UserTable dataUser={dataUser} loadUser={loadUser}/>
+        <UserTable
+          dataUser={dataUser}
+          loadUser={loadUser}
+          current={current}
+          pageSize={pageSize}
+          total={total}
+          setCurrent={setCurrent}
+          setPageSize={setPageSize}
+        />
       </div>
     </>
   );

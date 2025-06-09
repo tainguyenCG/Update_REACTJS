@@ -5,7 +5,7 @@ import UpdateUserModal from "./update.modal.user";
 import ViewUserDetail from "./view.user.detail";
 import { deleteUserAPI } from "../../services/api.service";
 
-const UserTable = ({ dataUser, loadUser }) => {
+const UserTable = ({ dataUser, loadUser, current, pageSize, total,setCurrent,setPageSize }) => {
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
   const [dataUpdate, setDataUpdate] = useState(null);
 
@@ -38,10 +38,7 @@ const UserTable = ({ dataUser, loadUser }) => {
   const columns = [
     {
       title: "STT",
-      render: (_, record, index) => (
-        <>
-          {index +1 }
-        </>),
+      render: (_, record, index) => <>{index + 1}</>,
     },
     {
       title: "ID",
@@ -131,6 +128,8 @@ const UserTable = ({ dataUser, loadUser }) => {
     },
   ];
 
+  const onChange = (pagination, filters, sorter, extra) => {  };
+
   return (
     <div
       style={{
@@ -141,7 +140,26 @@ const UserTable = ({ dataUser, loadUser }) => {
         backgroundColor: "#fff",
       }}
     >
-      <Table columns={columns} dataSource={dataUser} rowKey="_id" />
+      <Table
+        columns={columns}
+        dataSource={dataUser}
+        rowKey="_id"
+        pagination={{
+          current: current,
+          pageSize: pageSize,
+          showSizeChanger: true,
+          total: total,
+          showTotal: (total, range) => {
+            return (
+              <div>
+                {" "}
+                {range[0]}-{range[1]} trên {total} rows
+              </div>
+            );
+          },
+        }}
+        onChange={onChange}
+      />
 
       <UpdateUserModal
         isModalUpdateOpen={isModalUpdateOpen}

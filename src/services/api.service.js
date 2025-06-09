@@ -13,8 +13,8 @@ const createUserAPI = (fullName, email, password, phone) => {
 };
 
 // Lấy danh sách user
-const fetchAllUserAPI = () => {
-  const URL_BE = "/api/v1/user";
+const fetchAllUserAPI = (current, pageSize) => {
+  const URL_BE = `/api/v1/user?current=${current}&pageSize=${pageSize}`;
   return axios.get(URL_BE);
 };
 
