@@ -38,7 +38,7 @@ const UserTable = ({ dataUser, loadUser, current, pageSize, total,setCurrent,set
   const columns = [
     {
       title: "STT",
-      render: (_, record, index) => <>{index + 1}</>,
+      render: (_, record, index) => <>{(index + 1) + (current-1)*pageSize }</>,
     },
     {
       title: "ID",
@@ -128,7 +128,20 @@ const UserTable = ({ dataUser, loadUser, current, pageSize, total,setCurrent,set
     },
   ];
 
-  const onChange = (pagination, filters, sorter, extra) => {  };
+  const onChange = (pagination, filters, sorter, extra) => { 
+    //nếu thay đổi trang thì current
+    if(pagination && pagination.current){
+      if(pagination.current !== +current){
+        setCurrent(+ pagination.current) //ví dụ "5" là chuỗi ra số nguyên 5
+      }
+    }
+    //tổng số phần tử thì pageSize
+    if(pagination && pagination.pageSize){
+      if(pagination.pageSize !== +pageSize){
+        setPageSize(+ pagination.pageSize) 
+      }
+    }
+   };
 
   return (
     <div

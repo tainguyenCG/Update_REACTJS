@@ -11,7 +11,7 @@ const UserPage = () => {
 
   useEffect(() => {
     loadUser();
-  }, []);
+  }, [current, pageSize]);
 
   const loadUser = async () => {
     const res = await fetchAllUserAPI(current, pageSize);
@@ -22,6 +22,7 @@ const UserPage = () => {
       setTotal(res.data.meta.total);
     }
   };
+  console.log("checkk pageSize", pageSize)
   return (
     <>
       <div style={{ paddingTop: "90px" }}>
